@@ -25,7 +25,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running mn.edu.must.sqat.GradeCalculatorTest
-[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.181 s -- in mn.edu.must.sqat.GradeCalculatorTest
+[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.115 s -- in mn.edu.must.sqat.GradeCalculatorTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -34,6 +34,6 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.131 s
-[INFO] Finished at: 2026-09-29T23:16:37+08:00
+[INFO] Total time:  0.862 s
+[INFO] Finished at: 2026-09-29T23:19:57+08:00
 [INFO] ------------------------------------------------------------------------
