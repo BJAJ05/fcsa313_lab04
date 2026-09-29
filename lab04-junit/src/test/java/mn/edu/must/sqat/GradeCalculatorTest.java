@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class GradeCalculatorTest {
 
@@ -155,6 +157,65 @@ public class GradeCalculatorTest {
         IllegalArgumentException.class,
         () -> {
           calc.totalScore(10.0, 40.0, 10.0, 10.0, 31.0);
+        });
+  }
+
+  @ParameterizedTest
+  @DisplayName("Оноог үсгэн дүнд хөрвүүлэлт шалгах тест")
+  @CsvSource({ "100, A", "90, A", "89.99, B", "80, B", "79.99, C", "70, C", "69.99, D", "60, D", "59.99, F", "0, F" })
+  void letterGradeBoundaries(double score, String expected) {
+    GradeCalculator calc = new GradeCalculator();
+    String result = calc.letterGrade(score);
+    assertEquals(expected, result);
+  }
+
+  @ParameterizedTest
+  @DisplayName("Нийлбэр оноо бодолтыг ердийн тохиолдолд шалгах")
+  @CsvSource({
+      "10, 40, 10, 10, 30, 100",
+      "10, 30, 10, 10, 20, 80",
+      "5, 20, 8, 7, 25, 65",
+      "0, 0, 0, 0, 0, 0"
+  })
+  void totalScoreParameterizedValid(
+      double att,
+      double lab,
+      double quiz1,
+      double quiz2,
+      double exam,
+      double expected) {
+
+    GradeCalculator calc = new GradeCalculator();
+    double result = calc.totalScore(att, lab, quiz1, quiz2, exam);
+    assertEquals(expected, result, 0.001);
+  }
+
+  @ParameterizedTest
+  @DisplayName("Онооны задаргаанд буруу утга өгөхөд IllegalArgumentException шидэх ёстой")
+  @CsvSource({
+      "-0.1, 40.0, 10.0, 10.0, 30.0",
+      "10.1, 40.0, 10.0, 10.0, 30.0",
+      "10.0, -0.01, 10.0, 10.0, 30.0",
+      "10.0, 40.1, 10.0, 10.0, 30.0",
+      "10.0, 40.0, -1.0, 10.0, 30.0",
+      "10.0, 40.0, 10.1, 10.0, 30.0",
+      "10.0, 40.0, 10.0, -10.0, 30.0",
+      "10.0, 40.0, 10.0, 10.1, 30.0",
+      "10.0, 40.0, 10.0, 10.0, -1.0",
+      "10.0, 40.0, 10.0, 10.0, 30.1"
+  })
+  void totalScoreParameterizedInvalid(
+      double att,
+      double lab,
+      double quiz1,
+      double quiz2,
+      double exam) {
+
+    GradeCalculator calc = new GradeCalculator();
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          calc.totalScore(att, lab, quiz1, quiz2, exam);
         });
   }
 }
